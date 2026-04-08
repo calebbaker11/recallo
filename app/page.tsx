@@ -1,100 +1,249 @@
 import Link from 'next/link'
 
+const CheckIcon = () => (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    aria-hidden="true"
+    style={{ color: 'var(--accent)', flexShrink: 0 }}
+  >
+    <path
+      d="M3 8l3.5 3.5L13 4.5"
+      stroke="currentColor"
+      strokeWidth="1.75"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
+
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navbar */}
-      <nav className="border-b border-gray-100 sticky top-0 bg-white z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <span className="text-xl font-bold text-blue-600">Recallo</span>
-            <div className="flex items-center gap-4">
-              <Link
-                href="/login"
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 transition-colors"
-              >
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
-              >
-                Get Started
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
+    <div style={{ background: 'var(--bg)', color: 'var(--text-primary)', minHeight: '100vh' }}>
 
-      {/* Hero */}
-      <section className="bg-gradient-to-br from-blue-50 to-indigo-50 py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-700 px-4 py-1.5 rounded-full text-sm font-medium mb-6">
-            <span className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
-            Built for dental practices
-          </div>
-          <h1 className="text-5xl sm:text-6xl font-bold text-gray-900 leading-tight mb-6">
-            Never lose a patient to voicemail again
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Recallo automatically texts patients back the moment your office misses
-            their call — getting them booked before they call a competitor.
-          </p>
-          <Link
-            href="/signup"
-            className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold px-8 py-4 rounded-xl transition-colors shadow-lg shadow-blue-200"
+      {/* ── Navbar ──────────────────────────────────────── */}
+      <header
+        style={{
+          borderBottom: '1px solid var(--border)',
+          position: 'sticky',
+          top: 0,
+          background: 'rgba(11,15,20,0.92)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          zIndex: 50,
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '1120px',
+            margin: '0 auto',
+            padding: '0 24px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: '60px',
+          }}
+        >
+          <span
+            style={{
+              fontSize: '18px',
+              fontWeight: '700',
+              letterSpacing: '-0.02em',
+              color: 'var(--text-primary)',
+            }}
           >
-            Start recovering missed calls
-          </Link>
-          <p className="mt-4 text-sm text-gray-500">
-            Setup takes under 5 minutes. No contracts.
+            Recallo
+          </span>
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <Link
+              href="/login"
+              className="nav-link"
+              style={{
+                fontSize: '14px',
+                fontWeight: '500',
+                padding: '6px 14px',
+                borderRadius: '8px',
+              }}
+            >
+              Log in
+            </Link>
+            <Link
+              href="/signup"
+              className="btn-primary"
+              style={{
+                fontSize: '14px',
+                padding: '7px 18px',
+                borderRadius: '8px',
+                display: 'inline-block',
+              }}
+            >
+              Get started
+            </Link>
+          </nav>
+        </div>
+      </header>
+
+      {/* ── Hero ──────────────────────────────────────────── */}
+      <section style={{ padding: '120px 24px 100px', textAlign: 'center' }}>
+        <div style={{ maxWidth: '720px', margin: '0 auto' }}>
+          <p
+            style={{
+              fontSize: '12px',
+              fontWeight: '700',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'var(--accent)',
+              marginBottom: '24px',
+            }}
+          >
+            Automated patient recovery
           </p>
+          <h1
+            style={{
+              fontSize: 'clamp(40px, 6vw, 64px)',
+              fontWeight: '800',
+              letterSpacing: '-0.04em',
+              lineHeight: '1.05',
+              color: 'var(--text-primary)',
+              marginBottom: '28px',
+            }}
+          >
+            Never lose a patient<br />to voicemail again.
+          </h1>
+          <p
+            style={{
+              fontSize: '19px',
+              lineHeight: '1.65',
+              color: 'var(--text-secondary)',
+              maxWidth: '540px',
+              margin: '0 auto 48px',
+            }}
+          >
+            Recallo texts patients the instant your office misses their call —
+            recovering appointments before they dial a competitor.
+          </p>
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '16px',
+              flexWrap: 'wrap',
+            }}
+          >
+            <Link
+              href="/signup"
+              className="btn-primary"
+              style={{
+                fontSize: '15px',
+                padding: '14px 32px',
+                borderRadius: '10px',
+                letterSpacing: '-0.01em',
+                display: 'inline-block',
+              }}
+            >
+              Start recovering patients
+            </Link>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
+              5-minute setup · No contracts
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* How it works */}
-      <section className="py-24 px-4">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">
-            How Recallo works
-          </h2>
-          <p className="text-center text-gray-500 mb-16">
-            Three simple steps. Fully automated.
+      {/* ── Divider ──────────────────────────────────────── */}
+      <div style={{ maxWidth: '1120px', margin: '0 auto', padding: '0 24px' }}>
+        <div style={{ height: '1px', background: 'var(--border)' }} />
+      </div>
+
+      {/* ── How it works ─────────────────────────────────── */}
+      <section style={{ padding: '100px 24px' }}>
+        <div style={{ maxWidth: '1120px', margin: '0 auto' }}>
+          <p
+            style={{
+              fontSize: '12px',
+              fontWeight: '700',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'var(--accent)',
+              marginBottom: '16px',
+              textAlign: 'center',
+            }}
+          >
+            How it works
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <h2
+            style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: '700',
+              letterSpacing: '-0.03em',
+              textAlign: 'center',
+              color: 'var(--text-primary)',
+              marginBottom: '72px',
+            }}
+          >
+            Three steps. Fully automatic.
+          </h2>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '2px',
+            }}
+          >
             {[
               {
-                step: '1',
+                number: '01',
                 title: 'Patient calls your office',
-                description:
-                  'You give patients your Recallo number. Every call is automatically forwarded to your real office line.',
-                icon: '📞',
+                body: 'Give patients your Recallo number. Every call is instantly forwarded to your real office line — nothing changes for staff.',
               },
               {
-                step: '2',
+                number: '02',
                 title: 'Call goes unanswered',
-                description:
-                  'If no one picks up within 20 seconds, Recallo detects the missed call in real time.',
-                icon: '📵',
+                body: "If your team doesn't pick up within 20 seconds, Recallo detects the missed call and triggers immediately.",
               },
               {
-                step: '3',
-                title: 'Patient gets a text instantly',
-                description:
-                  'Recallo immediately sends a personalized SMS with your booking link — before they call a competitor.',
-                icon: '💬',
+                number: '03',
+                title: 'Patient receives a follow-up text',
+                body: 'A personalized SMS is sent with your booking link — reaching the patient before they consider calling someone else.',
               },
-            ].map((item) => (
-              <div key={item.step} className="text-center">
-                <div className="text-4xl mb-4">{item.icon}</div>
-                <div className="inline-flex items-center justify-center w-8 h-8 bg-blue-600 text-white rounded-full text-sm font-bold mb-4">
-                  {item.step}
-                </div>
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {item.title}
+            ].map((step) => (
+              <div key={step.number} className="step-card" style={{ padding: '48px 40px' }}>
+                <p
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: '700',
+                    letterSpacing: '0.08em',
+                    color: 'var(--accent)',
+                    marginBottom: '20px',
+                  }}
+                >
+                  {step.number}
+                </p>
+                <h3
+                  style={{
+                    fontSize: '18px',
+                    fontWeight: '600',
+                    letterSpacing: '-0.02em',
+                    color: 'var(--text-primary)',
+                    marginBottom: '12px',
+                    lineHeight: '1.3',
+                  }}
+                >
+                  {step.title}
                 </h3>
-                <p className="text-gray-600 text-sm leading-relaxed">
-                  {item.description}
+                <p
+                  style={{
+                    fontSize: '15px',
+                    color: 'var(--text-secondary)',
+                    lineHeight: '1.65',
+                    margin: 0,
+                  }}
+                >
+                  {step.body}
                 </p>
               </div>
             ))}
@@ -102,141 +251,423 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ROI section */}
-      <section className="bg-gray-900 text-white py-24 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">The math is simple</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-            <div className="bg-gray-800 rounded-xl p-6">
-              <p className="text-4xl font-bold text-blue-400 mb-2">30%</p>
-              <p className="text-gray-300 text-sm">
-                of incoming calls go unanswered at the average dental practice
-              </p>
-            </div>
-            <div className="bg-gray-800 rounded-xl p-6">
-              <p className="text-4xl font-bold text-green-400 mb-2">$2,000+</p>
-              <p className="text-gray-300 text-sm">
-                lifetime value of a single recovered new patient
-              </p>
-            </div>
-            <div className="bg-gray-800 rounded-xl p-6">
-              <p className="text-4xl font-bold text-yellow-400 mb-2">10x</p>
-              <p className="text-gray-300 text-sm">
-                One recovered patient pays for Recallo ten times over
-              </p>
-            </div>
+      {/* ── ROI ──────────────────────────────────────────── */}
+      <section style={{ padding: '0 24px 100px' }}>
+        <div
+          style={{
+            maxWidth: '1120px',
+            margin: '0 auto',
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            borderRadius: '16px',
+            padding: 'clamp(40px, 6vw, 72px) clamp(32px, 6vw, 64px)',
+          }}
+        >
+          <div style={{ maxWidth: '560px', marginBottom: '56px' }}>
+            <h2
+              style={{
+                fontSize: 'clamp(26px, 4vw, 38px)',
+                fontWeight: '700',
+                letterSpacing: '-0.03em',
+                color: 'var(--text-primary)',
+                marginBottom: '16px',
+                lineHeight: '1.15',
+              }}
+            >
+              One recovered patient pays for a year of Recallo.
+            </h2>
+            <p
+              style={{
+                fontSize: '16px',
+                color: 'var(--text-secondary)',
+                lineHeight: '1.65',
+                margin: 0,
+              }}
+            >
+              The average dental practice misses 30% of incoming calls. Each one is a
+              patient who may never call back. Recallo closes that gap automatically.
+            </p>
           </div>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            The average dental practice misses 30% of incoming calls. One recovered new
-            patient pays for Recallo 10 times over.
-          </p>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+              gap: '48px',
+            }}
+          >
+            {[
+              {
+                stat: '30%',
+                label: 'of calls go unanswered at the average dental office',
+              },
+              {
+                stat: '$2,000+',
+                label: 'lifetime value of a single recovered patient',
+              },
+              {
+                stat: '< 5s',
+                label: 'average time to send a follow-up text after a missed call',
+              },
+            ].map((item) => (
+              <div key={item.stat}>
+                <p
+                  style={{
+                    fontSize: '42px',
+                    fontWeight: '800',
+                    letterSpacing: '-0.04em',
+                    color: 'var(--accent)',
+                    lineHeight: '1',
+                    marginBottom: '10px',
+                  }}
+                >
+                  {item.stat}
+                </p>
+                <p
+                  style={{
+                    fontSize: '14px',
+                    color: 'var(--text-secondary)',
+                    lineHeight: '1.55',
+                    margin: 0,
+                  }}
+                >
+                  {item.label}
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* Pricing */}
-      <section id="pricing" className="py-24 px-4">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">
-            Simple, transparent pricing
+      {/* ── Pricing ──────────────────────────────────────── */}
+      <section id="pricing" style={{ padding: '0 24px 120px' }}>
+        <div style={{ maxWidth: '1120px', margin: '0 auto' }}>
+          <p
+            style={{
+              fontSize: '12px',
+              fontWeight: '700',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: 'var(--accent)',
+              marginBottom: '16px',
+              textAlign: 'center',
+            }}
+          >
+            Pricing
+          </p>
+          <h2
+            style={{
+              fontSize: 'clamp(28px, 4vw, 40px)',
+              fontWeight: '700',
+              letterSpacing: '-0.03em',
+              textAlign: 'center',
+              color: 'var(--text-primary)',
+              marginBottom: '12px',
+            }}
+          >
+            Simple pricing. No surprises.
           </h2>
-          <p className="text-center text-gray-500 mb-16">
+          <p
+            style={{
+              fontSize: '16px',
+              color: 'var(--text-secondary)',
+              textAlign: 'center',
+              marginBottom: '64px',
+            }}
+          >
             No setup fees. No contracts. Cancel anytime.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '16px',
+            }}
+          >
             {/* Founding Member */}
-            <div className="relative bg-white rounded-2xl border-2 border-blue-500 p-8 shadow-lg">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
-                  Limited — first 10 customers only
+            <div
+              style={{
+                background: 'var(--surface)',
+                border: '1px solid var(--accent)',
+                borderRadius: '14px',
+                padding: '40px 36px',
+                position: 'relative',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: '28px',
+                  background: 'var(--accent)',
+                  color: '#0B0F14',
+                  fontSize: '11px',
+                  fontWeight: '700',
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  padding: '4px 10px',
+                  borderRadius: '0 0 6px 6px',
+                }}
+              >
+                Limited · First 10 only
+              </div>
+              <p
+                style={{
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  color: 'var(--accent)',
+                  marginBottom: '12px',
+                  marginTop: '16px',
+                }}
+              >
+                Founding Member
+              </p>
+              <div style={{ marginBottom: '8px' }}>
+                <span
+                  style={{
+                    fontSize: '44px',
+                    fontWeight: '800',
+                    letterSpacing: '-0.04em',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  $297
+                </span>
+                <span
+                  style={{
+                    fontSize: '16px',
+                    color: 'var(--text-secondary)',
+                    marginLeft: '4px',
+                  }}
+                >
+                  /mo
                 </span>
               </div>
-              <p className="text-sm font-semibold text-blue-600 mb-2">Founding Member</p>
-              <p className="text-4xl font-bold text-gray-900 mb-1">
-                $297<span className="text-lg font-normal text-gray-500">/mo</span>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '32px' }}>
+                Rate locked in forever
               </p>
-              <p className="text-sm text-gray-500 mb-6">Locked in forever</p>
-              <ul className="space-y-3 mb-8">
+              <ul
+                style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: '0 0 36px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  flex: 1,
+                }}
+              >
                 {[
-                  'Unlimited missed call texts',
-                  'Custom SMS messages',
-                  'Dashboard & analytics',
-                  'Dedicated Twilio number',
+                  'Unlimited patient follow-up texts',
+                  'Custom SMS message',
+                  'Patient recovery analytics',
+                  'Dedicated practice number',
                   'Priority support',
-                ].map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-sm text-gray-700">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {feature}
+                ].map((f) => (
+                  <li
+                    key={f}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      fontSize: '14px',
+                      color: 'var(--text-secondary)',
+                    }}
+                  >
+                    <CheckIcon />
+                    {f}
                   </li>
                 ))}
               </ul>
               <Link
                 href="/signup"
-                className="block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
+                className="btn-primary"
+                style={{
+                  display: 'block',
+                  textAlign: 'center',
+                  padding: '13px',
+                  borderRadius: '8px',
+                  fontSize: '15px',
+                  letterSpacing: '-0.01em',
+                }}
               >
                 Claim founding rate
               </Link>
             </div>
 
             {/* Standard */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-8">
-              <p className="text-sm font-semibold text-gray-500 mb-2">Standard</p>
-              <p className="text-4xl font-bold text-gray-900 mb-1">
-                $397<span className="text-lg font-normal text-gray-500">/mo</span>
+            <div
+              style={{
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
+                borderRadius: '14px',
+                padding: '40px 36px',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <p
+                style={{
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  color: 'var(--text-secondary)',
+                  marginBottom: '12px',
+                }}
+              >
+                Standard
               </p>
-              <p className="text-sm text-gray-500 mb-6">General dental practices</p>
-              <ul className="space-y-3 mb-8">
+              <div style={{ marginBottom: '8px' }}>
+                <span
+                  style={{
+                    fontSize: '44px',
+                    fontWeight: '800',
+                    letterSpacing: '-0.04em',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  $397
+                </span>
+                <span style={{ fontSize: '16px', color: 'var(--text-secondary)', marginLeft: '4px' }}>
+                  /mo
+                </span>
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '32px' }}>
+                General dental practices
+              </p>
+              <ul
+                style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: '0 0 36px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  flex: 1,
+                }}
+              >
                 {[
-                  'Unlimited missed call texts',
-                  'Custom SMS messages',
-                  'Dashboard & analytics',
-                  'Dedicated Twilio number',
+                  'Unlimited patient follow-up texts',
+                  'Custom SMS message',
+                  'Patient recovery analytics',
+                  'Dedicated practice number',
                   'Email support',
-                ].map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-sm text-gray-700">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {feature}
+                ].map((f) => (
+                  <li
+                    key={f}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      fontSize: '14px',
+                      color: 'var(--text-secondary)',
+                    }}
+                  >
+                    <CheckIcon />
+                    {f}
                   </li>
                 ))}
               </ul>
               <Link
                 href="/signup"
-                className="block text-center bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
+                className="btn-secondary"
+                style={{
+                  display: 'block',
+                  textAlign: 'center',
+                  padding: '13px',
+                  borderRadius: '8px',
+                  fontSize: '15px',
+                }}
               >
                 Get started
               </Link>
             </div>
 
             {/* Ortho */}
-            <div className="bg-white rounded-2xl border border-gray-200 p-8">
-              <p className="text-sm font-semibold text-gray-500 mb-2">Orthodontist</p>
-              <p className="text-4xl font-bold text-gray-900 mb-1">
-                $497<span className="text-lg font-normal text-gray-500">/mo</span>
+            <div
+              style={{
+                background: 'var(--surface)',
+                border: '1px solid var(--border)',
+                borderRadius: '14px',
+                padding: '40px 36px',
+                display: 'flex',
+                flexDirection: 'column',
+              }}
+            >
+              <p
+                style={{
+                  fontSize: '13px',
+                  fontWeight: '600',
+                  color: 'var(--text-secondary)',
+                  marginBottom: '12px',
+                }}
+              >
+                Orthodontist
               </p>
-              <p className="text-sm text-gray-500 mb-6">Orthodontic practices</p>
-              <ul className="space-y-3 mb-8">
+              <div style={{ marginBottom: '8px' }}>
+                <span
+                  style={{
+                    fontSize: '44px',
+                    fontWeight: '800',
+                    letterSpacing: '-0.04em',
+                    color: 'var(--text-primary)',
+                  }}
+                >
+                  $497
+                </span>
+                <span style={{ fontSize: '16px', color: 'var(--text-secondary)', marginLeft: '4px' }}>
+                  /mo
+                </span>
+              </div>
+              <p style={{ fontSize: '13px', color: 'var(--text-muted)', marginBottom: '32px' }}>
+                Orthodontic practices
+              </p>
+              <ul
+                style={{
+                  listStyle: 'none',
+                  padding: 0,
+                  margin: '0 0 36px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  flex: 1,
+                }}
+              >
                 {[
-                  'Unlimited missed call texts',
-                  'Custom SMS messages',
-                  'Dashboard & analytics',
-                  'Dedicated Twilio number',
+                  'Unlimited patient follow-up texts',
+                  'Custom SMS message',
+                  'Patient recovery analytics',
+                  'Dedicated practice number',
                   'Priority support',
-                  'Multi-location support',
-                ].map((feature) => (
-                  <li key={feature} className="flex items-center gap-2 text-sm text-gray-700">
-                    <svg className="w-4 h-4 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                    {feature}
+                  'Multi-location ready',
+                ].map((f) => (
+                  <li
+                    key={f}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '10px',
+                      fontSize: '14px',
+                      color: 'var(--text-secondary)',
+                    }}
+                  >
+                    <CheckIcon />
+                    {f}
                   </li>
                 ))}
               </ul>
               <Link
                 href="/signup"
-                className="block text-center bg-gray-900 hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-xl transition-colors"
+                className="btn-secondary"
+                style={{
+                  display: 'block',
+                  textAlign: 'center',
+                  padding: '13px',
+                  borderRadius: '8px',
+                  fontSize: '15px',
+                }}
               >
                 Get started
               </Link>
@@ -245,18 +676,37 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-100 py-10 px-4">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <span className="text-xl font-bold text-blue-600">Recallo</span>
-          <p className="text-sm text-gray-500">
+      {/* ── Footer ──────────────────────────────────────── */}
+      <footer style={{ borderTop: '1px solid var(--border)', padding: '40px 24px' }}>
+        <div
+          style={{
+            maxWidth: '1120px',
+            margin: '0 auto',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '16px',
+          }}
+        >
+          <span
+            style={{
+              fontSize: '16px',
+              fontWeight: '700',
+              letterSpacing: '-0.02em',
+              color: 'var(--text-primary)',
+            }}
+          >
+            Recallo
+          </span>
+          <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
             &copy; {new Date().getFullYear()} Recallo. All rights reserved.
           </p>
-          <div className="flex items-center gap-6 text-sm text-gray-600">
-            <Link href="/login" className="hover:text-gray-900 transition-colors">
-              Login
+          <div style={{ display: 'flex', gap: '24px' }}>
+            <Link href="/login" className="footer-link" style={{ fontSize: '13px' }}>
+              Log in
             </Link>
-            <Link href="/signup" className="hover:text-gray-900 transition-colors">
+            <Link href="/signup" className="footer-link" style={{ fontSize: '13px' }}>
               Sign up
             </Link>
           </div>

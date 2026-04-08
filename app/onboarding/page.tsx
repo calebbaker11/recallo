@@ -6,6 +6,11 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 
+const steps = [
+  { label: 'Practice details' },
+  { label: 'Choose plan' },
+]
+
 export default function OnboardingPage() {
   const [name, setName] = useState('')
   const [forwardingNumber, setForwardingNumber] = useState('')
@@ -40,31 +45,130 @@ export default function OnboardingPage() {
     router.push('/dashboard/billing')
   }
 
+  const inputStyle: React.CSSProperties = {
+    background: 'var(--bg)',
+    border: '1px solid var(--border)',
+    borderRadius: '8px',
+    padding: '10px 14px',
+    fontSize: '15px',
+    color: 'var(--text-primary)',
+    outline: 'none',
+    width: '100%',
+  }
+
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
-      <div className="max-w-lg w-full">
-        <div className="text-center mb-8">
-          <Link href="/" className="text-2xl font-bold text-blue-600">
+    <div
+      style={{
+        minHeight: '100vh',
+        background: 'var(--bg)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '40px 24px',
+      }}
+    >
+      <div style={{ width: '100%', maxWidth: '480px' }}>
+
+        {/* Logo */}
+        <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <Link
+            href="/"
+            style={{
+              fontSize: '22px',
+              fontWeight: '800',
+              letterSpacing: '-0.03em',
+              color: 'var(--text-primary)',
+              textDecoration: 'none',
+            }}
+          >
             Recallo
           </Link>
-          <h1 className="mt-4 text-2xl font-semibold text-gray-900">
-            Set up your practice
-          </h1>
-          <p className="mt-2 text-gray-600">
-            We&apos;ll provision a dedicated phone number for your office in seconds.
-          </p>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8">
-          <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Step indicator */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '36px' }}>
+          {steps.map((step, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px', flex: i < steps.length - 1 ? 1 : 'none' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+                <div
+                  style={{
+                    width: '24px',
+                    height: '24px',
+                    borderRadius: '50%',
+                    background: i === 0 ? 'var(--accent)' : 'var(--border)',
+                    color: i === 0 ? '#0B0F14' : 'var(--text-muted)',
+                    fontSize: '12px',
+                    fontWeight: '700',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  {i + 1}
+                </div>
+                <span
+                  style={{
+                    fontSize: '13px',
+                    fontWeight: i === 0 ? '600' : '400',
+                    color: i === 0 ? 'var(--text-primary)' : 'var(--text-muted)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {step.label}
+                </span>
+              </div>
+              {i < steps.length - 1 && (
+                <div style={{ flex: 1, height: '1px', background: 'var(--border)' }} />
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Card */}
+        <div
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            borderRadius: '14px',
+            padding: '40px',
+          }}
+        >
+          <h1
+            style={{
+              fontSize: '22px',
+              fontWeight: '700',
+              letterSpacing: '-0.02em',
+              color: 'var(--text-primary)',
+              marginBottom: '6px',
+            }}
+          >
+            Set up your practice
+          </h1>
+          <p style={{ fontSize: '14px', color: 'var(--text-secondary)', marginBottom: '36px', lineHeight: '1.55' }}>
+            We&apos;ll provision a dedicated Recallo number for your office. Calls forward
+            to your real line — automatically.
+          </p>
+
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+              <div
+                style={{
+                  background: 'rgba(239,68,68,0.08)',
+                  border: '1px solid rgba(239,68,68,0.25)',
+                  color: '#FCA5A5',
+                  borderRadius: '8px',
+                  padding: '12px 14px',
+                  fontSize: '13px',
+                  lineHeight: '1.5',
+                }}
+              >
                 {error}
               </div>
             )}
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <label style={{ fontSize: '13px', fontWeight: '500', color: 'var(--text-secondary)' }}>
                 Practice name
               </label>
               <input
@@ -72,59 +176,71 @@ export default function OnboardingPage() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Sunshine Dental"
+                style={inputStyle}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <label style={{ fontSize: '13px', fontWeight: '500', color: 'var(--text-secondary)' }}>
                 Office phone number
               </label>
-              <p className="text-xs text-gray-500 mb-2">
-                The real number patients will be forwarded to
+              <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: '0 0 4px' }}>
+                Your real number — patients are forwarded here
               </p>
               <input
                 type="tel"
                 required
                 value={forwardingNumber}
                 onChange={(e) => setForwardingNumber(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="+15555551234"
+                style={inputStyle}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
               />
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <label style={{ fontSize: '13px', fontWeight: '500', color: 'var(--text-secondary)' }}>
                 Online booking link
               </label>
-              <p className="text-xs text-gray-500 mb-2">
-                The URL we send to patients so they can book instantly
+              <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: '0 0 4px' }}>
+                Sent in every follow-up text to the patient
               </p>
               <input
                 type="url"
                 required
                 value={bookingLink}
                 onChange={(e) => setBookingLink(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="https://yourbooking.com/schedule"
+                style={inputStyle}
+                onFocus={e => (e.currentTarget.style.borderColor = 'var(--accent)')}
+                onBlur={e => (e.currentTarget.style.borderColor = 'var(--border)')}
               />
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-semibold py-3 px-4 rounded-lg transition-colors"
+              style={{
+                background: loading ? 'var(--border)' : 'var(--accent)',
+                color: loading ? 'var(--text-muted)' : '#0B0F14',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '13px',
+                fontSize: '15px',
+                fontWeight: '700',
+                cursor: loading ? 'not-allowed' : 'pointer',
+                letterSpacing: '-0.01em',
+                marginTop: '4px',
+              }}
             >
-              {loading ? 'Setting up your practice...' : 'Set up practice & continue'}
+              {loading ? 'Provisioning your number…' : 'Continue to billing'}
             </button>
           </form>
         </div>
-
-        <p className="mt-4 text-center text-xs text-gray-500">
-          We&apos;ll automatically provision a Twilio phone number for your practice.
-          You&apos;ll give patients this number to call — calls are forwarded to your real office line.
-        </p>
       </div>
     </div>
   )

@@ -30,10 +30,23 @@ export default async function BillingPage() {
     : null
 
   return (
-    <div className="max-w-2xl">
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Billing</h1>
-        <p className="text-gray-500 mt-1">Manage your Recallo subscription</p>
+    <div style={{ maxWidth: '640px' }}>
+      {/* Header */}
+      <div style={{ marginBottom: '40px' }}>
+        <h1
+          style={{
+            fontSize: 'clamp(24px, 4vw, 32px)',
+            fontWeight: '700',
+            letterSpacing: '-0.03em',
+            color: 'var(--text-primary)',
+            marginBottom: '6px',
+          }}
+        >
+          Billing
+        </h1>
+        <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
+          Manage your Recallo subscription
+        </p>
       </div>
 
       <BillingClient

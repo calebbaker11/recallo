@@ -22,37 +22,86 @@ export default function DashboardNav() {
   ]
 
   return (
-    <nav className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <div className="flex items-center gap-8">
-            <Link href="/" className="text-xl font-bold text-blue-600">
-              Recallo
-            </Link>
-            <div className="flex gap-1">
-              {links.map((link) => (
+    <header
+      style={{
+        borderBottom: '1px solid var(--border)',
+        background: 'var(--bg)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 40,
+      }}
+    >
+      <div
+        style={{
+          maxWidth: '1120px',
+          margin: '0 auto',
+          padding: '0 24px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          height: '56px',
+        }}
+      >
+        {/* Left: logo + nav */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+          <Link
+            href="/"
+            style={{
+              fontSize: '17px',
+              fontWeight: '800',
+              letterSpacing: '-0.03em',
+              color: 'var(--text-primary)',
+              textDecoration: 'none',
+              flexShrink: 0,
+            }}
+          >
+            Recallo
+          </Link>
+
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
+            {links.map((link) => {
+              const isActive = pathname === link.href
+              return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    pathname === link.href
-                      ? 'bg-blue-50 text-blue-700'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-                  }`}
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: isActive ? '600' : '400',
+                    color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
+                    textDecoration: 'none',
+                    padding: '5px 12px',
+                    borderRadius: '6px',
+                    background: isActive ? 'var(--surface)' : 'transparent',
+                    transition: 'color 150ms, background 150ms',
+                  }}
                 >
                   {link.label}
                 </Link>
-              ))}
-            </div>
-          </div>
-          <button
-            onClick={handleSignOut}
-            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
-          >
-            Sign out
-          </button>
+              )
+            })}
+          </nav>
         </div>
+
+        {/* Right: sign out */}
+        <button
+          onClick={handleSignOut}
+          style={{
+            fontSize: '13px',
+            fontWeight: '500',
+            color: 'var(--text-muted)',
+            background: 'none',
+            border: 'none',
+            cursor: 'pointer',
+            padding: '5px 0',
+            transition: 'color 150ms',
+          }}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+        >
+          Sign out
+        </button>
       </div>
-    </nav>
+    </header>
   )
 }

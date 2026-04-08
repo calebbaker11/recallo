@@ -18,7 +18,6 @@ export default async function DashboardPage() {
 
   if (!practice) redirect('/onboarding')
 
-  // Get this month's missed calls
   const startOfMonth = new Date()
   startOfMonth.setDate(1)
   startOfMonth.setHours(0, 0, 0, 0)
@@ -36,7 +35,6 @@ export default async function DashboardPage() {
   const recoveryRate =
     totalMissed > 0 ? Math.round((totalSmsSent / totalMissed) * 100) : 0
 
-  // Get recent missed calls (last 20)
   const { data: recentCalls } = await supabase
     .from('missed_calls')
     .select('*')
@@ -44,70 +42,301 @@ export default async function DashboardPage() {
     .order('called_at', { ascending: false })
     .limit(20)
 
+  const monthName = new Date().toLocaleString('default', { month: 'long' })
+
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">{practice.name}</h1>
-        <p className="text-gray-500 mt-1">Dashboard overview — this month</p>
+      {/* ── Page header ──────────────────────────────────── */}
+      <div style={{ marginBottom: '48px' }}>
+        <p style={{ fontSize: '13px', fontWeight: '600', letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '8px' }}>
+          {practice.name}
+        </p>
+        <h1
+          style={{
+            fontSize: 'clamp(26px, 4vw, 34px)',
+            fontWeight: '700',
+            letterSpacing: '-0.03em',
+            color: 'var(--text-primary)',
+            lineHeight: '1.1',
+          }}
+        >
+          Overview
+        </h1>
+        <p style={{ fontSize: '14px', color: 'var(--text-muted)', marginTop: '6px' }}>
+          {monthName} · Updated live
+        </p>
       </div>
 
-      {/* Stats grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <p className="text-sm font-medium text-gray-500">Missed calls</p>
-          <p className="text-4xl font-bold text-gray-900 mt-2">{totalMissed}</p>
-          <p className="text-sm text-gray-500 mt-1">This month</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <p className="text-sm font-medium text-gray-500">SMS sent</p>
-          <p className="text-4xl font-bold text-blue-600 mt-2">{totalSmsSent}</p>
-          <p className="text-sm text-gray-500 mt-1">This month</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <p className="text-sm font-medium text-gray-500">Recovery rate</p>
-          <p className="text-4xl font-bold text-green-600 mt-2">{recoveryRate}%</p>
-          <p className="text-sm text-gray-500 mt-1">SMS sent / missed calls</p>
+      {/* ── Hero stat ────────────────────────────────────── */}
+      <div
+        style={{
+          background: 'var(--surface)',
+          border: '1px solid var(--border)',
+          borderRadius: '14px',
+          padding: '48px 48px 44px',
+          marginBottom: '16px',
+          position: 'relative',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Subtle accent bar */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: '2px',
+            background: 'var(--accent)',
+            opacity: 0.7,
+          }}
+        />
+        <p
+          style={{
+            fontSize: '13px',
+            fontWeight: '600',
+            letterSpacing: '0.07em',
+            textTransform: 'uppercase',
+            color: 'var(--text-muted)',
+            marginBottom: '16px',
+          }}
+        >
+          Patients reached this month
+        </p>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '20px', flexWrap: 'wrap' }}>
+          <p
+            style={{
+              fontSize: 'clamp(64px, 10vw, 96px)',
+              fontWeight: '800',
+              letterSpacing: '-0.05em',
+              color: 'var(--accent)',
+              lineHeight: '1',
+              margin: 0,
+              fontVariantNumeric: 'tabular-nums',
+            }}
+          >
+            {totalSmsSent}
+          </p>
+          <div style={{ paddingBottom: '8px' }}>
+            <p style={{ fontSize: '15px', color: 'var(--text-secondary)', margin: '0 0 4px' }}>
+              follow-up texts sent in {monthName}
+            </p>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
+              {recoveryRate}% recovery rate · {totalMissed} missed calls total
+            </p>
+          </div>
         </div>
       </div>
 
-      {/* Recent missed calls feed */}
-      <div className="bg-white rounded-xl border border-gray-200">
-        <div className="px-6 py-4 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">Recent missed calls</h2>
+      {/* ── Secondary stats ──────────────────────────────── */}
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gap: '12px',
+          marginBottom: '48px',
+        }}
+      >
+        {[
+          {
+            label: 'Missed calls',
+            value: totalMissed,
+            sub: `in ${monthName}`,
+            color: 'var(--text-primary)',
+          },
+          {
+            label: 'Follow-ups sent',
+            value: totalSmsSent,
+            sub: 'texts delivered',
+            color: 'var(--text-primary)',
+          },
+          {
+            label: 'Recovery rate',
+            value: `${recoveryRate}%`,
+            sub: 'texts ÷ missed calls',
+            color: 'var(--text-primary)',
+          },
+        ].map((stat) => (
+          <div
+            key={stat.label}
+            style={{
+              background: 'var(--surface)',
+              border: '1px solid var(--border)',
+              borderRadius: '12px',
+              padding: '28px 28px 24px',
+            }}
+          >
+            <p
+              style={{
+                fontSize: '12px',
+                fontWeight: '600',
+                letterSpacing: '0.06em',
+                textTransform: 'uppercase',
+                color: 'var(--text-muted)',
+                marginBottom: '12px',
+              }}
+            >
+              {stat.label}
+            </p>
+            <p
+              style={{
+                fontSize: '36px',
+                fontWeight: '800',
+                letterSpacing: '-0.04em',
+                color: stat.color,
+                lineHeight: '1',
+                marginBottom: '6px',
+                fontVariantNumeric: 'tabular-nums',
+              }}
+            >
+              {stat.value}
+            </p>
+            <p style={{ fontSize: '12px', color: 'var(--text-muted)', margin: 0 }}>
+              {stat.sub}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* ── Recent activity ──────────────────────────────── */}
+      <div
+        style={{
+          background: 'var(--surface)',
+          border: '1px solid var(--border)',
+          borderRadius: '14px',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Table header */}
+        <div
+          style={{
+            padding: '20px 28px',
+            borderBottom: '1px solid var(--border)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
+        >
+          <h2
+            style={{
+              fontSize: '15px',
+              fontWeight: '600',
+              letterSpacing: '-0.01em',
+              color: 'var(--text-primary)',
+              margin: 0,
+            }}
+          >
+            Recent calls
+          </h2>
+          <span style={{ fontSize: '12px', color: 'var(--text-muted)' }}>
+            Last 20 entries
+          </span>
         </div>
-        <div className="divide-y divide-gray-100">
-          {recentCalls && recentCalls.length > 0 ? (
-            recentCalls.map((call: MissedCall) => (
+
+        {/* Column labels */}
+        {recentCalls && recentCalls.length > 0 && (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: '1fr 1fr auto',
+              padding: '10px 28px',
+              borderBottom: '1px solid var(--border-subtle)',
+              background: 'rgba(255,255,255,0.01)',
+            }}
+          >
+            {['Patient number', 'Time', 'Status'].map((col) => (
+              <span
+                key={col}
+                style={{
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  letterSpacing: '0.07em',
+                  textTransform: 'uppercase',
+                  color: 'var(--text-muted)',
+                }}
+              >
+                {col}
+              </span>
+            ))}
+          </div>
+        )}
+
+        {/* Rows */}
+        {recentCalls && recentCalls.length > 0 ? (
+          <div>
+            {recentCalls.map((call: MissedCall, i: number) => (
               <div
                 key={call.id}
-                className="px-6 py-4 flex items-center justify-between"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr auto',
+                  padding: '16px 28px',
+                  alignItems: 'center',
+                  borderBottom: i < recentCalls.length - 1 ? '1px solid var(--border-subtle)' : 'none',
+                  transition: 'background 150ms',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.background = 'rgba(255,255,255,0.02)')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
               >
-                <div>
-                  <p className="font-medium text-gray-900">{call.caller_number}</p>
-                  <p className="text-sm text-gray-500">
-                    {new Date(call.called_at).toLocaleString()}
-                  </p>
-                </div>
                 <span
-                  className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
-                    call.sms_sent
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
-                  }`}
+                  style={{
+                    fontSize: '14px',
+                    fontWeight: '500',
+                    color: 'var(--text-primary)',
+                    fontVariantNumeric: 'tabular-nums',
+                    letterSpacing: '0.01em',
+                  }}
                 >
-                  {call.sms_sent ? 'SMS sent' : 'SMS failed'}
+                  {call.caller_number}
+                </span>
+                <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
+                  {new Date(call.called_at).toLocaleString('default', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                  })}
+                </span>
+                <span
+                  style={{
+                    fontSize: '12px',
+                    fontWeight: '600',
+                    letterSpacing: '0.04em',
+                    color: call.sms_sent ? 'var(--accent)' : '#EF4444',
+                    background: call.sms_sent ? 'rgba(96,165,250,0.08)' : 'rgba(239,68,68,0.08)',
+                    border: `1px solid ${call.sms_sent ? 'rgba(96,165,250,0.2)' : 'rgba(239,68,68,0.2)'}`,
+                    borderRadius: '5px',
+                    padding: '3px 8px',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {call.sms_sent ? 'Reached' : 'Not sent'}
                 </span>
               </div>
-            ))
-          ) : (
-            <div className="px-6 py-12 text-center text-gray-500">
-              <p className="text-lg font-medium">No missed calls yet</p>
-              <p className="text-sm mt-1">
-                Once patients call your Twilio number, missed calls will appear here.
-              </p>
-            </div>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            style={{
+              padding: '80px 28px',
+              textAlign: 'center',
+            }}
+          >
+            <p
+              style={{
+                fontSize: '15px',
+                fontWeight: '500',
+                color: 'var(--text-secondary)',
+                marginBottom: '8px',
+              }}
+            >
+              No missed calls yet
+            </p>
+            <p style={{ fontSize: '13px', color: 'var(--text-muted)', margin: 0 }}>
+              Once patients call your Recallo number, activity will appear here.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )

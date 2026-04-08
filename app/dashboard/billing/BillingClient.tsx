@@ -10,7 +10,38 @@ type Props = {
   practiceId: string
 }
 
-export default function BillingClient({ subscription, planName, practiceId }: Props) {
+const CheckIcon = () => (
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true" style={{ color: 'var(--accent)', flexShrink: 0, marginTop: '1px' }}>
+    <path d="M2.5 7l3 3L11.5 4" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+  </svg>
+)
+
+const planFeatures: Record<string, string[]> = {
+  founding: [
+    'Unlimited patient follow-up texts',
+    'Custom SMS message',
+    'Real-time recovery analytics',
+    'Dedicated practice number',
+    'Priority support',
+  ],
+  standard: [
+    'Unlimited patient follow-up texts',
+    'Custom SMS message',
+    'Real-time recovery analytics',
+    'Dedicated practice number',
+    'Email support',
+  ],
+  ortho: [
+    'Unlimited patient follow-up texts',
+    'Custom SMS message',
+    'Real-time recovery analytics',
+    'Dedicated practice number',
+    'Priority support',
+    'Multi-location ready',
+  ],
+}
+
+export default function BillingClient({ subscription, planName }: Props) {
   const [loadingPortal, setLoadingPortal] = useState(false)
   const [loadingPlan, setLoadingPlan] = useState<string | null>(null)
   const [error, setError] = useState('')
@@ -48,79 +79,201 @@ export default function BillingClient({ subscription, planName, practiceId }: Pr
   const isActive = subscription?.status === 'active'
 
   return (
-    <div className="space-y-6">
+    <div>
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm">
+        <div
+          style={{
+            background: 'rgba(239,68,68,0.08)',
+            border: '1px solid rgba(239,68,68,0.25)',
+            color: '#FCA5A5',
+            borderRadius: '8px',
+            padding: '12px 14px',
+            fontSize: '13px',
+            marginBottom: '20px',
+          }}
+        >
           {error}
         </div>
       )}
 
       {isActive ? (
-        <div className="bg-white rounded-xl border border-gray-200 p-6">
-          <div className="flex items-center justify-between">
+        /* ── Active subscription ─────────────────────── */
+        <div
+          style={{
+            background: 'var(--surface)',
+            border: '1px solid var(--border)',
+            borderRadius: '14px',
+            padding: '36px',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              gap: '24px',
+              flexWrap: 'wrap',
+            }}
+          >
             <div>
-              <p className="text-sm font-medium text-gray-500">Current plan</p>
-              <p className="text-xl font-bold text-gray-900 mt-1">{planName}</p>
-              <p className="text-sm text-gray-500 mt-1 capitalize">
-                Status:{' '}
-                <span className="text-green-600 font-medium">{subscription?.status}</span>
+              <p style={{ fontSize: '12px', fontWeight: '600', letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '10px' }}>
+                Current plan
               </p>
+              <p style={{ fontSize: '28px', fontWeight: '700', letterSpacing: '-0.03em', color: 'var(--text-primary)', marginBottom: '6px' }}>
+                {planName}
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: 'var(--accent)' }} />
+                <span style={{ fontSize: '13px', color: 'var(--text-secondary)', textTransform: 'capitalize' }}>
+                  {subscription?.status}
+                </span>
+              </div>
             </div>
             <button
               onClick={handlePortal}
               disabled={loadingPortal}
-              className="bg-white border border-gray-300 hover:bg-gray-50 disabled:opacity-50 text-gray-700 font-medium py-2 px-4 rounded-lg transition-colors text-sm"
+              style={{
+                background: 'var(--surface-raised)',
+                border: '1px solid var(--border)',
+                color: loadingPortal ? 'var(--text-muted)' : 'var(--text-secondary)',
+                borderRadius: '8px',
+                padding: '10px 20px',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: loadingPortal ? 'not-allowed' : 'pointer',
+                transition: 'all 150ms',
+                flexShrink: 0,
+              }}
+              onMouseEnter={e => !loadingPortal && (e.currentTarget.style.color = 'var(--text-primary)')}
+              onMouseLeave={e => (e.currentTarget.style.color = loadingPortal ? 'var(--text-muted)' : 'var(--text-secondary)')}
             >
-              {loadingPortal ? 'Opening...' : 'Manage billing'}
+              {loadingPortal ? 'Opening…' : 'Manage billing'}
             </button>
           </div>
+
+          {/* Features list for current plan */}
+          {subscription?.plan && planFeatures[subscription.plan] && (
+            <div style={{ marginTop: '32px', paddingTop: '28px', borderTop: '1px solid var(--border)' }}>
+              <p style={{ fontSize: '12px', fontWeight: '600', letterSpacing: '0.07em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: '14px' }}>
+                Included
+              </p>
+              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {planFeatures[subscription.plan].map((f) => (
+                  <li key={f} style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+                    <CheckIcon />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       ) : (
-        <>
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg px-4 py-3">
-            <p className="text-sm text-yellow-800 font-medium">
+        /* ── No subscription — plan picker ───────────── */
+        <div>
+          <div
+            style={{
+              background: 'rgba(96,165,250,0.06)',
+              border: '1px solid rgba(96,165,250,0.2)',
+              borderRadius: '10px',
+              padding: '16px 20px',
+              marginBottom: '28px',
+            }}
+          >
+            <p style={{ fontSize: '14px', fontWeight: '500', color: 'var(--text-primary)', marginBottom: '3px' }}>
               No active subscription
             </p>
-            <p className="text-sm text-yellow-700 mt-0.5">
-              Choose a plan below to activate your account and start recovering missed calls.
+            <p style={{ fontSize: '13px', color: 'var(--text-secondary)', margin: 0 }}>
+              Choose a plan to activate your account and start recovering missed patients.
             </p>
           </div>
 
-          <div className="grid gap-4">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
             {Object.entries(PLANS).map(([key, plan]) => (
               <div
                 key={key}
-                className={`bg-white rounded-xl border p-6 flex items-center justify-between ${
-                  key === 'founding'
-                    ? 'border-blue-300 ring-1 ring-blue-200'
-                    : 'border-gray-200'
-                }`}
+                style={{
+                  background: 'var(--surface)',
+                  border: `1px solid ${key === 'founding' ? 'var(--accent)' : 'var(--border)'}`,
+                  borderRadius: '12px',
+                  padding: '28px 28px 28px 32px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '24px',
+                  flexWrap: 'wrap',
+                  position: 'relative',
+                  overflow: 'hidden',
+                }}
               >
+                {/* Accent bar for founding */}
+                {key === 'founding' && (
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      width: '3px',
+                      background: 'var(--accent)',
+                    }}
+                  />
+                )}
                 <div>
-                  <div className="flex items-center gap-2">
-                    <p className="font-semibold text-gray-900">{plan.name}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                    <p style={{ fontSize: '15px', fontWeight: '600', color: 'var(--text-primary)', margin: 0 }}>
+                      {plan.name}
+                    </p>
                     {key === 'founding' && (
-                      <span className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-0.5 rounded-full">
-                        Limited — first 10 customers only
+                      <span
+                        style={{
+                          fontSize: '11px',
+                          fontWeight: '700',
+                          letterSpacing: '0.05em',
+                          textTransform: 'uppercase',
+                          color: 'var(--accent)',
+                          background: 'rgba(96,165,250,0.1)',
+                          border: '1px solid rgba(96,165,250,0.2)',
+                          padding: '2px 8px',
+                          borderRadius: '4px',
+                        }}
+                      >
+                        First 10 only
                       </span>
                     )}
                   </div>
-                  <p className="text-2xl font-bold text-gray-900 mt-1">
-                    ${(plan.price / 100).toFixed(0)}
-                    <span className="text-sm font-normal text-gray-500">/mo</span>
-                  </p>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: '3px' }}>
+                    <span style={{ fontSize: '28px', fontWeight: '800', letterSpacing: '-0.04em', color: 'var(--text-primary)' }}>
+                      ${(plan.price / 100).toFixed(0)}
+                    </span>
+                    <span style={{ fontSize: '14px', color: 'var(--text-muted)' }}>/mo</span>
+                  </div>
                 </div>
                 <button
                   onClick={() => handleSubscribe(key)}
                   disabled={loadingPlan === key}
-                  className="bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium py-2 px-4 rounded-lg transition-colors text-sm whitespace-nowrap"
+                  style={{
+                    background: key === 'founding' ? 'var(--accent)' : 'var(--surface-raised)',
+                    color: key === 'founding' ? '#0B0F14' : 'var(--text-primary)',
+                    border: key === 'founding' ? 'none' : '1px solid var(--border)',
+                    borderRadius: '8px',
+                    padding: '10px 22px',
+                    fontSize: '14px',
+                    fontWeight: '700',
+                    cursor: loadingPlan === key ? 'not-allowed' : 'pointer',
+                    opacity: loadingPlan === key ? 0.6 : 1,
+                    transition: 'opacity 150ms',
+                    flexShrink: 0,
+                    whiteSpace: 'nowrap',
+                    letterSpacing: '-0.01em',
+                  }}
                 >
-                  {loadingPlan === key ? 'Loading...' : 'Choose plan'}
+                  {loadingPlan === key ? 'Loading…' : 'Choose plan'}
                 </button>
               </div>
             ))}
           </div>
-        </>
+        </div>
       )}
     </div>
   )
