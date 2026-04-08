@@ -5,55 +5,27 @@ import { PLANS } from '@/lib/stripe'
 
 export default async function BillingPage() {
   const supabase = await createClient()
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
-
+  const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
-  const { data: practice } = await supabase
-    .from('practices')
-    .select('id')
-    .eq('owner_id', user.id)
-    .single()
-
+  const { data: practice } = await supabase.from('practices').select('id').eq('owner_id', user.id).single()
   if (!practice) redirect('/onboarding')
 
-  const { data: subscription } = await supabase
-    .from('subscriptions')
-    .select('*')
-    .eq('practice_id', practice.id)
-    .single()
-
-  const planName = subscription?.plan
-    ? PLANS[subscription.plan as keyof typeof PLANS]?.name
-    : null
+  const { data: subscription } = await supabase.from('subscriptions').select('*').eq('practice_id', practice.id).single()
+  const planName = subscription?.plan ? PLANS[subscription.plan as keyof typeof PLANS]?.name : null
 
   return (
-    <div style={{ maxWidth: '640px' }}>
-      {/* Header */}
-      <div style={{ marginBottom: '40px' }}>
-        <h1
-          style={{
-            fontSize: 'clamp(24px, 4vw, 32px)',
-            fontWeight: '700',
-            letterSpacing: '-0.03em',
-            color: 'var(--text-primary)',
-            marginBottom: '6px',
-          }}
-        >
+    <div className="max-w-[580px] animate-in">
+      <div className="mb-10">
+        <h1 className="text-[clamp(24px,4vw,32px)] font-bold tracking-[-0.035em] text-text mb-1">
           Billing
         </h1>
-        <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>
-          Manage your Recallo subscription
+        <p className="text-[14px] text-text-muted">
+          Manage your subscription
         </p>
       </div>
 
-      <BillingClient
-        subscription={subscription}
-        planName={planName}
-        practiceId={practice.id}
-      />
+      <BillingClient subscription={subscription} planName={planName} practiceId={practice.id} />
     </div>
   )
 }

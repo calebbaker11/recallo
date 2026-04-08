@@ -22,82 +22,27 @@ export default function DashboardNav() {
   ]
 
   return (
-    <header
-      style={{
-        borderBottom: '1px solid var(--border)',
-        background: 'var(--bg)',
-        position: 'sticky',
-        top: 0,
-        zIndex: 40,
-      }}
-    >
-      <div
-        style={{
-          maxWidth: '1120px',
-          margin: '0 auto',
-          padding: '0 24px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          height: '56px',
-        }}
-      >
-        {/* Left: logo + nav */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-          <Link
-            href="/"
-            style={{
-              fontSize: '17px',
-              fontWeight: '800',
-              letterSpacing: '-0.03em',
-              color: 'var(--text-primary)',
-              textDecoration: 'none',
-              flexShrink: 0,
-            }}
-          >
+    <header className="glass-nav sticky top-0 z-40 border-b border-border">
+      <div className="max-w-[1100px] mx-auto px-6 h-[52px] flex items-center justify-between">
+        <div className="flex items-center gap-8">
+          <Link href="/" className="text-[16px] font-semibold tracking-tight text-text no-underline">
             Recallo
           </Link>
-
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '2px' }}>
-            {links.map((link) => {
-              const isActive = pathname === link.href
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  style={{
-                    fontSize: '14px',
-                    fontWeight: isActive ? '600' : '400',
-                    color: isActive ? 'var(--text-primary)' : 'var(--text-secondary)',
-                    textDecoration: 'none',
-                    padding: '5px 12px',
-                    borderRadius: '6px',
-                    background: isActive ? 'var(--surface)' : 'transparent',
-                    transition: 'color 150ms, background 150ms',
-                  }}
-                >
-                  {link.label}
-                </Link>
-              )
-            })}
+          <nav className="flex items-center gap-0.5">
+            {links.map((link) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={`nav-link ${pathname === link.href ? 'nav-link-active' : ''}`}
+              >
+                {link.label}
+              </Link>
+            ))}
           </nav>
         </div>
-
-        {/* Right: sign out */}
         <button
           onClick={handleSignOut}
-          style={{
-            fontSize: '13px',
-            fontWeight: '500',
-            color: 'var(--text-muted)',
-            background: 'none',
-            border: 'none',
-            cursor: 'pointer',
-            padding: '5px 0',
-            transition: 'color 150ms',
-          }}
-          onMouseEnter={e => (e.currentTarget.style.color = 'var(--text-secondary)')}
-          onMouseLeave={e => (e.currentTarget.style.color = 'var(--text-muted)')}
+          className="text-[13px] text-text-muted hover:text-text-secondary transition-colors bg-transparent border-0 cursor-pointer"
         >
           Sign out
         </button>

@@ -6,15 +6,9 @@ export default function DashboardLayout({
   children: React.ReactNode
 }) {
   return (
-    <div style={{ minHeight: '100vh', background: 'var(--bg)' }}>
+    <div className="min-h-screen bg-bg">
       <DashboardNav />
-      <main
-        style={{
-          maxWidth: '1120px',
-          margin: '0 auto',
-          padding: '48px 24px 80px',
-        }}
-      >
+      <main className="max-w-[1100px] mx-auto px-6 py-12">
         {children}
       </main>
     </div>
