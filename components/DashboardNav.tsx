@@ -11,8 +11,7 @@ export default function DashboardNav() {
 
   async function handleSignOut() {
     await supabase.auth.signOut()
-    router.push('/')
-    router.refresh()
+    router.push('/'); router.refresh()
   }
 
   const links = [
@@ -22,18 +21,18 @@ export default function DashboardNav() {
   ]
 
   return (
-    <header className="glass-nav sticky top-0 z-40 border-b border-border">
-      <div className="max-w-[1100px] mx-auto px-6 h-[52px] flex items-center justify-between">
+    <header className="glass sticky top-0 z-40 border-b border-white/[0.06]">
+      <div className="max-w-[1120px] mx-auto px-6 h-[52px] flex items-center justify-between">
         <div className="flex items-center gap-8">
-          <Link href="/" className="text-[16px] font-semibold tracking-tight text-text no-underline">
+          <Link href="/" className="text-[16px] font-bold tracking-tight text-hi no-underline">
             Recallo
           </Link>
           <nav className="flex items-center gap-0.5">
-            {links.map((link) => (
+            {links.map(link => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`nav-link ${pathname === link.href ? 'nav-link-active' : ''}`}
+                className={`nav-link ${pathname === link.href ? 'active' : ''}`}
               >
                 {link.label}
               </Link>
@@ -42,7 +41,7 @@ export default function DashboardNav() {
         </div>
         <button
           onClick={handleSignOut}
-          className="text-[13px] text-text-muted hover:text-text-secondary transition-colors bg-transparent border-0 cursor-pointer"
+          className="text-[13px] text-low hover:text-mid transition-colors bg-transparent border-0 cursor-pointer font-medium"
         >
           Sign out
         </button>

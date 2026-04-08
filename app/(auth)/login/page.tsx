@@ -1,5 +1,4 @@
 'use client'
-
 export const dynamic = 'force-dynamic'
 
 import { useState } from 'react'
@@ -17,55 +16,50 @@ export default function LoginPage() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault()
-    setLoading(true)
-    setError('')
+    setLoading(true); setError('')
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     if (error) { setError(error.message); setLoading(false); return }
-    router.push('/dashboard')
-    router.refresh()
+    router.push('/dashboard'); router.refresh()
   }
 
   return (
-    <div className="min-h-screen bg-bg flex items-center justify-center px-6">
-      <div className="w-full max-w-[380px] animate-in">
+    <div className="min-h-screen bg-base flex flex-col items-center justify-center px-6">
+      <div className="w-full max-w-[380px] anim-up">
+
+        {/* Logo */}
         <div className="text-center mb-10">
-          <Link href="/" className="text-[18px] font-semibold tracking-tight text-text no-underline">
+          <Link href="/" className="text-[19px] font-bold tracking-tight text-hi no-underline">
             Recallo
           </Link>
-          <h1 className="text-[24px] font-bold tracking-[-0.03em] text-text mt-8 mb-1.5">
+          <h1 className="text-[26px] font-black tracking-[-0.03em] text-hi mt-9 mb-2">
             Welcome back
           </h1>
-          <p className="text-[15px] text-text-secondary">
-            Sign in to your account
-          </p>
+          <p className="text-[15px] text-mid">Sign in to your account</p>
         </div>
 
-        <div className="card p-8">
-          <form onSubmit={handleLogin} className="flex flex-col gap-5">
-            {error && <div className="alert-error">{error}</div>}
+        <div className="card p-8 space-y-5">
+          {error && <div className="alert-error">{error}</div>}
 
-            <div>
-              <label className="label block">Email</label>
-              <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
-                placeholder="you@practice.com" className="input" />
-            </div>
+          <div>
+            <label className="label">Email</label>
+            <input type="email" required value={email} onChange={e => setEmail(e.target.value)}
+              placeholder="you@practice.com" className="field" />
+          </div>
 
-            <div>
-              <label className="label block">Password</label>
-              <input type="password" required value={password} onChange={e => setPassword(e.target.value)}
-                placeholder="Your password" className="input" />
-            </div>
+          <div>
+            <label className="label">Password</label>
+            <input type="password" required value={password} onChange={e => setPassword(e.target.value)}
+              placeholder="Your password" className="field" />
+          </div>
 
-            <button type="submit" disabled={loading} className="btn-primary w-full mt-1">
-              {loading ? 'Signing in…' : 'Sign in'}
-            </button>
-          </form>
+          <button type="button" onClick={handleLogin} disabled={loading}
+            className="btn btn-primary w-full mt-2">
+            {loading ? 'Signing in…' : 'Sign in'}
+          </button>
 
-          <p className="mt-7 text-center text-[13px] text-text-muted">
+          <p className="text-center text-[13px] text-low pt-1">
             No account?{' '}
-            <Link href="/signup" className="text-accent no-underline hover:underline">
-              Create one
-            </Link>
+            <Link href="/signup" className="text-accent no-underline hover:underline">Create one</Link>
           </p>
         </div>
       </div>
