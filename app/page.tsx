@@ -97,9 +97,9 @@ function DashboardPreview() {
         {/* Mini stats */}
         <div className="grid grid-cols-3 gap-2">
           {[
-            { label: 'Missed calls',   val: '56' },
-            { label: 'Texts sent',     val: '52' },
-            { label: 'Avg. response',  val: '< 5s' },
+            { label: 'Missed calls',  val: '56' },
+            { label: 'Texts sent',    val: '52' },
+            { label: 'Avg. response', val: '< 5s' },
           ].map(s => (
             <div key={s.label} className="rounded-lg bg-[#0D1218] border border-white/[0.04] p-3">
               <div className="text-[9px] uppercase tracking-wider text-[#4A5568] mb-1">{s.label}</div>
@@ -116,9 +116,9 @@ function DashboardPreview() {
             ))}
           </div>
           {[
-            ['(555) 291-4830', 'Today, 2:14 PM',      true],
-            ['(555) 847-2193', 'Today, 11:52 AM',     true],
-            ['(555) 103-9284', 'Yesterday, 4:38 PM',  false],
+            ['(555) 291-4830', 'Today, 2:14 PM',     true],
+            ['(555) 847-2193', 'Today, 11:52 AM',    true],
+            ['(555) 103-9284', 'Yesterday, 4:38 PM', false],
           ].map(([num, time, sent], i) => (
             <div key={i} className="grid grid-cols-3 items-center px-3.5 py-2.5 border-b border-white/[0.03] last:border-0">
               <span className="text-[11px] text-[#EDF0F7] font-medium tabular-nums">{num as string}</span>
@@ -163,18 +163,18 @@ export default function LandingPage() {
               <div className="anim-up inline-flex items-center gap-2 border border-accent/20 bg-accent/[0.07] rounded-full px-3.5 py-1.5 mb-8">
                 <span className="w-1.5 h-1.5 rounded-full bg-accent" />
                 <span className="text-[12px] font-semibold text-accent tracking-wide">
-                  Built for modern dental practices
+                  Automatic missed call text-back for dental practices
                 </span>
               </div>
 
               <h1 className="anim-up d1 text-[clamp(40px,5.5vw,64px)] font-black tracking-[-0.045em] text-hi leading-[1.02] mb-6">
-                Every missed call is revenue walking out the door.
+                Missed a call?<br />Patient gets a text.
               </h1>
 
               <p className="anim-up d2 text-[18px] text-mid leading-[1.75] mb-10 max-w-[460px]">
-                Recallo automatically texts patients the moment your office
-                misses their call — giving you a second chance at every
-                appointment before they call a competitor.
+                Recallo automatically sends a follow-up text the moment your
+                office misses a call — so patients book instead of hanging up.
+                No extra work. No app. Just more appointments.
               </p>
 
               <div className="anim-up d3 flex flex-wrap items-center gap-4 mb-8">
@@ -187,12 +187,12 @@ export default function LandingPage() {
                 </Link>
               </div>
 
-              {/* Trust markers — replace fake avatar strip */}
+              {/* Trust markers */}
               <div className="anim-up d4 flex flex-wrap items-center gap-x-6 gap-y-2 pt-8 border-t border-white/[0.06]">
                 {[
                   'Setup in under 5 minutes',
                   'No app required for patients',
-                  'Cancel anytime',
+                  'Works automatically in the background',
                 ].map(t => (
                   <div key={t} className="flex items-center gap-2">
                     <IconCheck cls="text-green" />
@@ -202,9 +202,12 @@ export default function LandingPage() {
               </div>
             </div>
 
-            {/* Right: product preview */}
+            {/* Right: dashboard */}
             <div className="anim-up d2 hidden lg:block">
               <DashboardPreview />
+              <p className="text-center text-[12px] text-low mt-4">
+                Simple visibility into every missed call and follow-up
+              </p>
             </div>
           </div>
         </div>
@@ -232,11 +235,11 @@ export default function LandingPage() {
           <div className="text-center mb-[72px]">
             <p className="overline text-accent mb-4">How it works</p>
             <h2 className="text-[clamp(30px,4vw,46px)] font-black tracking-[-0.04em] text-hi mb-4">
-              Three steps. No work required.
+              Set it up once. It runs itself.
             </h2>
-            <p className="text-[16px] text-mid max-w-[440px] mx-auto leading-relaxed">
-              Set up once in under 5 minutes. Recallo runs silently in the
-              background from that moment on.
+            <p className="text-[16px] text-mid max-w-[420px] mx-auto leading-relaxed">
+              Recallo works silently in the background — no staff training,
+              no new habits, no extra work.
             </p>
           </div>
 
@@ -246,19 +249,19 @@ export default function LandingPage() {
                 icon: <IconPhone />,
                 n: '01',
                 t: 'Patient calls your office',
-                d: 'Patients dial your dedicated Recallo number. Every call is forwarded instantly to your real office line — staff workflow stays exactly the same.',
+                d: 'Patients call your dedicated Recallo number. It rings through to your real office line exactly as it does today — nothing changes for your staff.',
               },
               {
                 icon: <IconMessage />,
                 n: '02',
-                t: 'Call goes unanswered',
-                d: 'If no one picks up within 20 seconds, Recallo detects the missed call in real time and automatically prepares a personalised follow-up.',
+                t: 'Nobody answers',
+                d: 'If the call goes unanswered, Recallo detects it instantly. No voicemail left behind. No patient lost in the shuffle.',
               },
               {
                 icon: <IconCalendar />,
                 n: '03',
-                t: 'Patient gets a text instantly',
-                d: 'A friendly SMS with your booking link reaches the patient within seconds — before they hang up or think to call another practice.',
+                t: 'Patient gets a text in seconds',
+                d: 'A friendly follow-up text with your booking link reaches them automatically — before they hang up or search for another dentist.',
               },
             ].map((step) => (
               <div key={step.n} className="card p-9 group hover:border-white/[0.12] transition-colors duration-200">
@@ -319,18 +322,20 @@ export default function LandingPage() {
       {/* ── ROI ──────────────────────────────────────────── */}
       <section className="px-6 pb-[120px]">
         <div className="max-w-[1120px] mx-auto card p-[clamp(40px,6vw,80px)] overflow-hidden relative">
-          {/* Accent bar */}
           <div className="absolute top-0 inset-x-0 h-[2px] bg-accent/60" />
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div>
-              <p className="overline text-accent mb-5">Return on investment</p>
+              <p className="overline text-accent mb-5">Why it pays for itself</p>
               <h2 className="text-[clamp(28px,4vw,44px)] font-black tracking-[-0.04em] text-hi leading-[1.1] mb-6">
-                One recovered patient pays for Recallo for an entire year.
+                One recovered patient covers the cost.
               </h2>
+              <p className="text-[15px] text-mid leading-[1.75] mb-4">
+                A new dental patient is worth $2,000+ over their lifetime.
+                Recallo costs $397 a month.
+              </p>
               <p className="text-[15px] text-mid leading-[1.75] mb-8">
-                The average dental practice misses 30% of all incoming calls —
-                and most of those patients never call back. Recallo turns every
-                missed call into a second chance at an appointment, automatically.
+                If it brings back even a single missed patient, it pays for
+                itself — and every recovery after that is pure profit.
               </p>
               <Link href="/signup" className="btn btn-primary group">
                 Get set up in minutes
@@ -341,7 +346,7 @@ export default function LandingPage() {
               {[
                 { n: '30%',    d: 'of calls go unanswered in the average dental office' },
                 { n: '$2k+',   d: 'lifetime value of a single recovered patient' },
-                { n: '< 5s',   d: 'from missed call to follow-up text in the patient\'s pocket' },
+                { n: '< 5s',   d: 'from missed call to text in the patient\'s pocket' },
                 { n: '5 min',  d: 'to set up Recallo — then it runs itself' },
               ].map(s => (
                 <div key={s.n} className="bg-surface-2 rounded-2xl p-6 border border-white/[0.05]">
@@ -357,104 +362,94 @@ export default function LandingPage() {
       {/* ── Pricing ──────────────────────────────────────── */}
       <section id="pricing" className="px-6 pb-[140px]">
         <div className="max-w-[1120px] mx-auto">
-          <div className="text-center mb-[72px]">
+          <div className="text-center mb-[64px]">
             <p className="overline text-accent mb-4">Pricing</p>
             <h2 className="text-[clamp(30px,4vw,46px)] font-black tracking-[-0.04em] text-hi mb-3">
-              Simple, honest pricing.
+              One plan. Everything included.
             </h2>
             <p className="text-[16px] text-mid">
-              No setup fees. No hidden charges. Cancel anytime.
+              No tiers to compare. No features locked away. No surprises.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-5 items-start">
+          {/* Single pricing card */}
+          <div className="max-w-[520px] mx-auto">
+            <div className="card-accent relative overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-[2px] bg-accent/70" />
+              <div className="p-10">
 
-            {/* Founding Member */}
-            <div className="card-accent p-9 relative flex flex-col">
-              <div className="absolute -top-px left-7 bg-accent text-[#07090E] text-[10px] font-black tracking-[0.08em] uppercase px-3 py-1 rounded-b-lg">
-                Only 3 spots left
-              </div>
-              <p className="text-[12px] font-bold tracking-[0.08em] uppercase text-accent mt-3 mb-3">Founding Member</p>
-              <div className="flex items-baseline gap-1.5 mb-1">
-                <span className="text-[52px] font-black tracking-[-0.05em] text-hi leading-none">$297</span>
-                <span className="text-[15px] text-mid mb-1">/mo</span>
-              </div>
-              <p className="text-[13px] text-low mb-8">Rate locked in for life · never increases</p>
-              <ul className="flex flex-col gap-3 mb-9 flex-1">
-                {[
-                  'Unlimited patient follow-ups',
-                  'Custom SMS message',
-                  'Recovery analytics dashboard',
-                  'Dedicated practice number',
-                  'Priority phone & email support',
-                  'Early access to new features',
-                ].map(f => (
-                  <li key={f} className="flex items-start gap-2.5 text-[14px] text-mid">
-                    <IconCheck cls="text-accent mt-0.5" /> {f}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/signup" className="btn btn-primary w-full justify-center">
-                Claim founding rate
-              </Link>
-            </div>
-
-            {/* Standard — most popular */}
-            <div className="card relative flex flex-col" style={{ borderColor: 'rgba(255,255,255,0.11)' }}>
-              <div className="absolute -top-px left-7 bg-surface-3 text-hi text-[10px] font-black tracking-[0.08em] uppercase px-3 py-1 rounded-b-lg border border-white/[0.1] border-t-0">
-                Most popular
-              </div>
-              <div className="p-9 flex flex-col flex-1">
-                <p className="text-[12px] font-bold tracking-[0.08em] uppercase text-mid mt-3 mb-3">Standard</p>
-                <div className="flex items-baseline gap-1.5 mb-1">
-                  <span className="text-[52px] font-black tracking-[-0.05em] text-hi leading-none">$397</span>
-                  <span className="text-[15px] text-mid mb-1">/mo</span>
+                {/* Price */}
+                <div className="text-center mb-10">
+                  <p className="text-[13px] font-bold tracking-[0.08em] uppercase text-accent mb-4">Recallo</p>
+                  <div className="flex items-baseline justify-center gap-2 mb-2">
+                    <span className="text-[72px] font-black tracking-[-0.05em] text-hi leading-none">$397</span>
+                    <span className="text-[18px] text-mid font-medium">/month</span>
+                  </div>
+                  <p className="text-[14px] text-low">No setup fee · Cancel anytime</p>
                 </div>
-                <p className="text-[13px] text-low mb-8">For single-location dental practices</p>
-                <ul className="flex flex-col gap-3 mb-9 flex-1">
+
+                {/* Features */}
+                <ul className="flex flex-col gap-4 mb-10">
                   {[
-                    'Unlimited patient follow-ups',
-                    'Custom SMS message',
-                    'Recovery analytics dashboard',
-                    'Dedicated practice number',
-                    'Email support',
+                    'Instant text-back for every missed call',
+                    'Works with your existing office number',
+                    'Simple dashboard — see every missed call and follow-up',
+                    'Done-for-you setup in under 5 minutes',
+                    'Support included',
                   ].map(f => (
-                    <li key={f} className="flex items-start gap-2.5 text-[14px] text-mid">
-                      <IconCheck cls="text-accent mt-0.5" /> {f}
+                    <li key={f} className="flex items-start gap-3 text-[15px] text-mid">
+                      <IconCheck cls="text-accent mt-0.5" />
+                      {f}
                     </li>
                   ))}
                 </ul>
-                <Link href="/signup" className="btn btn-ghost w-full justify-center">
-                  Get set up in minutes
+
+                {/* ROI nudge */}
+                <div className="rounded-xl bg-surface-2 border border-white/[0.05] px-5 py-4 mb-8 text-center">
+                  <p className="text-[14px] text-mid">
+                    One recovered patient covers the monthly cost.
+                  </p>
+                </div>
+
+                <Link href="/signup" className="btn btn-primary w-full justify-center text-[16px] !py-3.5">
+                  Start recovering missed patients
                 </Link>
               </div>
             </div>
 
-            {/* Ortho */}
-            <div className="card p-9 flex flex-col">
-              <p className="text-[12px] font-bold tracking-[0.08em] uppercase text-mid mb-3">Orthodontist</p>
-              <div className="flex items-baseline gap-1.5 mb-1">
-                <span className="text-[52px] font-black tracking-[-0.05em] text-hi leading-none">$497</span>
-                <span className="text-[15px] text-mid mb-1">/mo</span>
+            {/* ── Founding offer ─────────────────────────── */}
+            <div className="mt-4 rounded-2xl border border-accent/25 px-8 py-7"
+              style={{ background: 'rgba(79,158,255,0.04)' }}>
+              <div className="flex items-start justify-between gap-6 flex-wrap">
+                <div>
+                  <div className="flex items-center gap-2.5 mb-3">
+                    <span className="tag-accent">Founding Member Rate</span>
+                    <span className="text-[11px] text-low">· First 10 practices only</span>
+                  </div>
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className="text-[38px] font-black tracking-[-0.04em] text-hi leading-none">$297</span>
+                    <span className="text-[15px] text-mid">/month</span>
+                  </div>
+                  <p className="text-[13px] text-low mt-1">
+                    Lock in this rate for life — price never increases
+                  </p>
+                </div>
+                <Link href="/signup" className="btn btn-primary shrink-0 self-center">
+                  Claim this rate →
+                </Link>
               </div>
-              <p className="text-[13px] text-low mb-8">For ortho practices and multi-location groups</p>
-              <ul className="flex flex-col gap-3 mb-9 flex-1">
-                {[
-                  'Unlimited patient follow-ups',
-                  'Custom SMS per location',
-                  'Recovery analytics dashboard',
-                  'Multiple dedicated numbers',
-                  'Priority phone & email support',
-                  'Multi-location management',
-                ].map(f => (
-                  <li key={f} className="flex items-start gap-2.5 text-[14px] text-mid">
-                    <IconCheck cls="text-accent mt-0.5" /> {f}
-                  </li>
-                ))}
-              </ul>
-              <Link href="/signup" className="btn btn-ghost w-full justify-center">
-                Get started
-              </Link>
+
+              {/* Scarcity bar */}
+              <div className="mt-6 pt-5 border-t border-accent/10">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[12px] text-low">Founding spots claimed</span>
+                  <span className="text-[12px] font-semibold text-accent">7 of 10</span>
+                </div>
+                <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+                  <div className="h-full w-[70%] rounded-full bg-accent/60" />
+                </div>
+                <p className="text-[11px] text-low mt-2">3 spots remaining at this price</p>
+              </div>
             </div>
           </div>
         </div>
@@ -467,10 +462,12 @@ export default function LandingPage() {
             <h2 className="text-[clamp(24px,3.5vw,36px)] font-black tracking-[-0.035em] text-hi mb-2 leading-tight">
               Ready to stop losing patients to voicemail?
             </h2>
-            <p className="text-[15px] text-mid">5-minute setup. No app for patients. Your first recovery could be today.</p>
+            <p className="text-[15px] text-mid">
+              5-minute setup. Works automatically. Your first recovery could be today.
+            </p>
           </div>
           <Link href="/signup" className="btn btn-primary whitespace-nowrap shrink-0 !px-8 !py-3.5 !text-[16px] group">
-            Start recovering missed patients
+            Get started now
             <IconArrowRight />
           </Link>
         </div>
